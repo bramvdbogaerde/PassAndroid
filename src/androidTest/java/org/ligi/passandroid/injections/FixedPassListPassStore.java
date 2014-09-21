@@ -23,6 +23,11 @@ public class FixedPassListPassStore implements PassStore {
     }
 
     @Override
+    public void deleteCache(String id) {
+        // no effect in this impl
+    }
+
+    @Override
     public void refreshPassesList() {
         // no effect in this impl
     }
@@ -79,5 +84,10 @@ public class FixedPassListPassStore implements PassStore {
     @Override
     public boolean deletePassWithId(String id) {
         return false;
+    }
+
+    @Override
+    public String getPathForID(String id) {
+        return null;
     }
 }

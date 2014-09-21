@@ -53,6 +53,7 @@ public class PassVisualizer {
         }
 
         if (dateForIntent != null) {
+            findById(container, R.id.addCalendar).setVisibility(View.VISIBLE);
             findById(container, R.id.addCalendar).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,6 +71,8 @@ public class PassVisualizer {
 
         if (dateForIntent == null && !(pass.getLocations().size() > 0)) {
             findById(container, R.id.actionsContainer).setVisibility(View.GONE);
+        } else {
+            findById(container, R.id.actionsContainer).setVisibility(View.VISIBLE);
         }
 
         final ImageView icon_img = findById(container, R.id.icon);
@@ -98,6 +101,7 @@ public class PassVisualizer {
         if (pass.getRelevantDate().isPresent()) {
             final CharSequence relativeDateTimeString = DateUtils.getRelativeDateTimeString(container.getContext(), pass.getRelevantDate().get().getMillis(), DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, 0);
             dateTextView.setText(relativeDateTimeString);
+            dateTextView.setVisibility(View.VISIBLE);
         } else if (pass.getExpirationDate().isPresent()) {
             final CharSequence relativeDateTimeString = DateUtils.getRelativeDateTimeString(container.getContext(), pass.getExpirationDate().get().getMillis(), DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, 0);
 

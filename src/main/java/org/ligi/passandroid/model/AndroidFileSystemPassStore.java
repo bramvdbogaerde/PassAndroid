@@ -7,6 +7,8 @@ import com.google.common.base.Optional;
 import org.ligi.axt.AXT;
 import org.ligi.passandroid.App;
 import org.ligi.passandroid.helper.DirectoryFileFilter;
+import org.ligi.passandroid.reader.AppleStylePassReader;
+import org.ligi.passandroid.reader.PassReader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -32,8 +34,13 @@ public class AndroidFileSystemPassStore implements PassStore {
 
     public void deleteCache() {
         for (String id : getPassIDArray()) {
-            getCacheFile(id).delete();
+            deleteCache(id);
         }
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public void deleteCache(String id) {
+        getCacheFile(id).delete();
     }
 
     private File getCacheFile(String id) {
@@ -73,11 +80,24 @@ public class AndroidFileSystemPassStore implements PassStore {
         try {
             return AXT.at(cachedFile).loadToObject();
         } catch (Exception e) {
+            //noinspection EmptyCatchBlock
         }
 
         final String language = context.getResources().getConfiguration().locale.getLanguage();
-        final Pass pass = AppleStylePassReader.read(getPathForID(id), language);
+
+        final Pass pass = readPass(id, language);
+
         AXT.at(cachedFile).writeObject(pass);
+        return pass;
+    }
+
+    private Pass readPass(String id, String language) {
+        Pass pass;
+        if (new File(getPathForID(id), "data.json").exists()) {
+            pass = PassReader.read(getPathForID(id));
+        } else {
+            pass = AppleStylePassReader.read(getPathForID(id), language);
+        }
         return pass;
     }
 
@@ -87,6 +107,7 @@ public class AndroidFileSystemPassStore implements PassStore {
         if (!passes_dir.exists()) {
             passes_dir.mkdirs();
         }
+
         return passes_dir;
     }
 
@@ -103,9 +124,7 @@ public class AndroidFileSystemPassStore implements PassStore {
     }
 
     public Pass getPassbookForId(final String id, final String language) {
-        final String mPath = path + "/" + id;
-        // TODO read from cache
-        return AppleStylePassReader.read(mPath, language);
+        return readPass(id, language);
     }
 
     public void sort(final SortOrder order) {
@@ -192,7 +211,7 @@ public class AndroidFileSystemPassStore implements PassStore {
         return AXT.at(new File(getPathForID(id))).deleteRecursive();
     }
 
-    private String getPathForID(final String id) {
+    public String getPathForID(final String id) {
         return path + "/" + id;
     }
 }

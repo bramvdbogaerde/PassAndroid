@@ -77,14 +77,11 @@ public class PassViewActivity extends PassViewActivityBase {
     TextView barcodeAlternatvieText;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onResume() {
 
         if (!optionalPass.isPresent()) {
             return;
         }
-
-        AXT.at(this).disableRotation();
 
         final Pass pass = optionalPass.get();
 
@@ -107,15 +104,6 @@ public class PassViewActivity extends PassViewActivityBase {
                     .show();
             return;
         }
-
-        final View contentView = getLayoutInflater().inflate(R.layout.activity_pass_view, null);
-        setContentView(contentView);
-
-        final View passExtrasView = getLayoutInflater().inflate(R.layout.pass_view_extra_data, null);
-        final ViewGroup extraViewContainer = (ViewGroup) contentView.findViewById(R.id.passExtrasContainer);
-        extraViewContainer.addView(passExtrasView);
-
-        ButterKnife.inject(this);
 
         if (pass.getBarCode().isPresent()) {
             final int smallestSide = AXT.at(getWindowManager()).getSmallestSide();
@@ -168,7 +156,24 @@ public class PassViewActivity extends PassViewActivityBase {
 
 
         Linkify.addLinks(back_tv, Linkify.ALL);
-        PassVisualizer.visualize(this, pass, contentView);
+        PassVisualizer.visualize(this, pass, getWindow().getDecorView());
+        super.onPostResume();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        AXT.at(this).disableRotation();
+
+        setContentView(R.layout.activity_pass_view);
+
+        final View passExtrasView = getLayoutInflater().inflate(R.layout.pass_view_extra_data, null);
+        final ViewGroup extraViewContainer = (ViewGroup) findViewById(R.id.passExtrasContainer);
+        extraViewContainer.addView(passExtrasView);
+
+        ButterKnife.inject(this);
+
     }
 
     private void addFrontFields(PassFieldList passFields) {

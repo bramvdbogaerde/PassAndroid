@@ -39,6 +39,8 @@ public interface PassStore {
 
     public void deleteCache();
 
+    public void deleteCache(String id);
+
     public void refreshPassesList();
 
     public int passCount();
@@ -60,4 +62,6 @@ public interface PassStore {
     public void setCurrentPass(Optional<Pass> pass);
 
     public boolean deletePassWithId(String id);
+
+    public String getPathForID(String id);
 }

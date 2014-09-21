@@ -40,7 +40,7 @@
                     android:id="@+id/date"
                     tools:text="12.10.2013 17:00"
                     android:layout_width="wrap_content"
-
+                    android:fontFamily="sans-serif"
                     android:layout_height="wrap_content"
                     android:textColor="?android:textColorSecondary"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -49,6 +49,7 @@
                 <TextView
                     android:id="@+id/title"
                     tools:text="Title"
+                    android:fontFamily="sans-serif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="3dp"
