@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -89,10 +91,15 @@ public class PassListActivity extends ActionBarActivity {
     }
 
     @OnItemClick(R.id.content_list)
-    void listItemClick(int position) {
+    void listItemClick(AdapterView<?> parent,View v,int position,long id) {
         final Pass newSelectedPass = App.getPassStore().getPassbookAt(position);
         App.getPassStore().setCurrentPass(Optional.of(newSelectedPass));
-        AXT.at(this).startCommonIntent().activityFromClass(PassViewActivity.class);
+
+        // Android Lollipop Transitions using AppCompat!
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this, v, "passbookdetail");
+        ActivityCompat.startActivity(this, new Intent(this, PassViewActivity.class),
+                options.toBundle());
     }
 
     public void refreshPasses() {

@@ -8,5 +8,5 @@
     <color name="icon_green">#ffbfdf00</color>
     <color name="icon_lila">#ffc46ee3</color>
     <color name="icon_orange">#ffffb420</color>
-
+    <color name="colorPrimary" >#9FD20E</color>
 </resources>
