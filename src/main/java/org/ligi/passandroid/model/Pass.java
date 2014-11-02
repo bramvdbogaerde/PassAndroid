@@ -17,6 +17,8 @@ public interface Pass extends Serializable {
 
     String getType();
 
+    String getLogoText();
+
     String getTypeNotNull();
 
     PassFieldList getPrimaryFields();

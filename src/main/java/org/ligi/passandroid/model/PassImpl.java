@@ -25,6 +25,7 @@ public class PassImpl implements Pass, Serializable {
     private int backGroundColor;
     private int foregroundColor;
     private String description;
+    private String logoText;
     private Optional<DateTime> relevantDate = Optional.absent();
     private Optional<DateTime> expirationDate = Optional.absent();
     private PassFieldList primaryFields = new PassFieldList();
@@ -79,6 +80,14 @@ public class PassImpl implements Pass, Serializable {
     @Override
     public String getType() {
         return type;
+    }
+
+    @Override
+    public String getLogoText() {
+        if(logoText == null){
+            return "";
+        }
+        return logoText;
     }
 
     @Override
@@ -189,6 +198,8 @@ public class PassImpl implements Pass, Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+    public void setLogoText(String logoText) {this.logoText = logoText;}
 
     public void setPath(String path) {
         this.path = path;
