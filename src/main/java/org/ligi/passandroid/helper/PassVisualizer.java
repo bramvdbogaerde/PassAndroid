@@ -75,7 +75,7 @@ public class PassVisualizer {
 
         icon_img.setBackgroundColor(pass.getBackGroundColor());
 
-        final Optional<Bitmap> iconBitmap = pass.getIconBitmap();
+        final Optional<Bitmap> iconBitmap = pass.getLogoBitmap();
         if (iconBitmap.isPresent()) {
             final int size = (int) container.getResources().getDimension(R.dimen.pass_icon_size);
             icon_img.setImageBitmap(Bitmap.createScaledBitmap(iconBitmap.get(), size, size, false));
@@ -85,15 +85,20 @@ public class PassVisualizer {
 
 
         if (pass.getType() != null) {
-            categoryIndicator.setImageByCategory(pass.getType());
-            categoryIndicator.setExtraTextToCatShortString(pass.getType());
+           // categoryIndicator.setImageByCategory(pass.getType());
+            //categoryIndicator.setExtraTextToCatShortString(pass.getType());
         }
 
-        categoryIndicator.setTextBackgroundColor(pass.getBackGroundColor());
-        categoryIndicator.setTextColor(pass.getForegroundColor());
+        //categoryIndicator.setTextBackgroundColor(pass.getBackGroundColor());
+       // categoryIndicator.setTextColor(pass.getForegroundColor());
 
-        titleTextView.setText(pass.getDescription());
-
+        if(pass.getLogoText().isEmpty()){
+            titleTextView.setText(pass.getDescription());
+        }
+        else {
+            titleTextView.setText(pass.getLogoText());
+        }
+        
         if (pass.getRelevantDate().isPresent()) {
             final CharSequence relativeDateTimeString = DateUtils.getRelativeDateTimeString(container.getContext(), pass.getRelevantDate().get().getMillis(), DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, 0);
             dateTextView.setText(relativeDateTimeString);

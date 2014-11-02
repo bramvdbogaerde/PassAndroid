@@ -115,6 +115,16 @@ public class AppleStylePassReader {
                 }
             }
 
+            if(pass_json.has("logoText")){
+                try {
+                    pass.setLogoText(pass_json.getString("logoText"));
+                } catch (JSONException | IllegalArgumentException e) {
+                    // be robust when it comes to bad dates - had a RL crash with "2013-12-25T00:00-57:00" here
+                    // OK then we just have no date here
+                    Tracker.get().trackException("problem parsing relevant date", e, false);
+                }
+            }
+
             if (pass_json.has("expirationDate")) {
                 try {
                     pass.setExpirationDate(Optional.of(new DateTime(pass_json.getString("expirationDate"))));

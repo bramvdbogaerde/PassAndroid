@@ -14,7 +14,9 @@
         <item name="android:paddingTop">3dp</item>
         <item name="android:background">@color/dividing_color</item>
     </style>
-
+    <style name="borderless_button" >
+        <item name="android:color" >@android:color/black</item>
+    </style>
     <style name="nav_btn">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

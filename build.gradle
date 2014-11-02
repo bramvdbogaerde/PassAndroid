@@ -116,7 +116,7 @@ android {
     defaultConfig {
         versionCode 241
         versionName "2.4.1"
-        minSdkVersion 9
+        minSdkVersion 11
         targetSdkVersion 21
         applicationId "org.ligi.passandroid"
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
